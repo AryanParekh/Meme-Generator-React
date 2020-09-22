@@ -4,27 +4,36 @@ import Image from './Image';
 import axios from 'axios';
 
 export default function MemeCreator(){
-    let [meme,setMeme]=useState(null)
-    let [text0,setText0]=useState('')
-    let [text1,setText1]=useState('')
     let {id,box}= useParams();
-
-    const changeHandler0=(event)=>{
-        setText0(event.target.value)
+    let arr=[];
+    for(let j=0;j<box;j++){
+        arr.push('');
     }
-    const changeHandler1=(event)=>{
-        setText1(event.target.value)
-    }
+    let [meme,setMeme]=useState(null);
+    let [text,setText]=useState(arr);
 
+    const changeHandler=(e,number)=>{
+        const t=[...text];
+        t[number]=e.target.value;
+        setText(t);
+    }
+    
     const submitHandler=(event)=>{
         event.preventDefault();
+
+        const boxes=Array(box).fill(" ");
+        for(let k=0;k<box;k++){
+            boxes[k]={'text':text[k]}
+        }
+        console.log()
         
         var bodyFormData=new FormData();
         bodyFormData.append('template_id',id);
         bodyFormData.append('username','AryanParekh1');
         bodyFormData.append('password','aryanparekh12');
-        bodyFormData.append('text0',text0);
-        bodyFormData.append('text1',text1);
+        for(let k=0;k<box;k++){
+            bodyFormData.append(`boxes[${k}][text]`,text[k]);
+        }
 
         axios({
             method:'POST',
@@ -34,32 +43,26 @@ export default function MemeCreator(){
         })
         .then((response)=>setMeme(response.data.data))
         .catch((error)=>console.log(error));
-
         
     }
-    console.log(meme)
+    
+    const textBoxNumber=[];
+    for(let i=0;i<box;i++){
+        textBoxNumber.push(i);
+    }
+
     return (
         <div>
             <form onSubmit={submitHandler}>
-                <div>
-                    <textarea 
-                        style={txtarea}
-                        width='20px'
-                        name="text0" 
-                        value={text0} 
-                        onChange={changeHandler0}  
-                        placeholder="Enter 1st text"
-                    />
-                </div>
-                <div>
-                    <textarea 
-                        style={txtarea}
-                        name="text1" 
-                        value={text1} 
-                        onChange={changeHandler1}  
-                        placeholder="Enter 2nd text"
-                    />
-                </div>
+                {textBoxNumber.map(number =><div key={number}>
+                                                <textarea 
+                                                    style={txtarea} 
+                                                    width='20px' 
+                                                    value={text[number]} 
+                                                    onChange={e=>changeHandler(e,number)}
+                                                    placeholder={"Enter text "+(number+1)}
+                                                    />
+                                            </div>)}
                 <button style={btn} type='submit'>Submit</button>
             </form>
             {meme===null?null:<Image url={meme.url}/>}
@@ -68,7 +71,7 @@ export default function MemeCreator(){
 }
 
 const btn={
-    width: "175px",
+    width: "200px",
     display: 'inline-block',
     padding:'1rem 1.5rem',
     border: '1px solid black',
@@ -82,7 +85,7 @@ const btn={
 }
 
 const txtarea={
-    width: '175px',
+    width: '200px',
     fontSize: '1.3rem',
     padding: '1rem',
     border: '0.5px solid #333',

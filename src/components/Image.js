@@ -5,7 +5,7 @@ const Image = ({url}) => {
         <div>
             <h5 style={{color:'black'}}>Here is Your MEME!</h5>
             <p style={{color:'black'}}>Keep making awesome memes like this one</p>
-            <img style={{border:'2px solid black'}} src={url} alt='' height='500' width='500'></img>
+            <img style={{border:'2px solid black'}} src={url} alt='' height='350' width='350'></img>
         </div>
     )
 }
