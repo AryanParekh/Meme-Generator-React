@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'; 
+import LazyLoad from 'react-lazyload';
 
 const useStyles = makeStyles({
     root: {
@@ -30,11 +31,13 @@ export default function MemeTemplate (props) {
                 <Card style={box} className={classes.root}>
 
                     <CardActionArea>
+                        <LazyLoad>
                         <CardMedia
                         className={classes.media}
                         image={props.meme.url}
                         title={props.meme.name}
                         />
+                        </LazyLoad>
                         <CardContent>
                             <Typography gutterBottom variant="h4" component="h2">
                                 {props.meme.name}

@@ -12,16 +12,16 @@ export default function App(){
     <BrowserRouter>
       <div>
         <center>
-        <Header/>
-        <br/>
-        <Route exact path='/'>
-          <div class='container'>
-            <MemeCollection/>
-          </div>
-        </Route>
-        <Route exact path='/:id/:box'> <MemeCreator /> </Route>
-        <br/>
-        <Footer/>
+          <Header/>
+          <br/>
+          <Route exact path='/'>
+            <div class='container'>
+              <MemeCollection/>
+            </div>
+          </Route>
+          <Route exact path='/:id/:box'> <MemeCreator /> </Route>
+          <br/>
+          <Footer/>
         </center>
       </div>
     </BrowserRouter>

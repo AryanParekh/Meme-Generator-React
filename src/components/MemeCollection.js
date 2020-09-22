@@ -2,6 +2,13 @@ import React, {useState,useEffect} from 'react';
 import MemeTemplate from './MemeTemplate';
 import Pagination from './Pagination';
 import axios from 'axios';
+import LazyLoad from 'react-lazyload';
+
+const Spinner=()=>(
+    <div className="post loading">
+        <h5>Loading....</h5>
+    </div>
+)
 
 const MemeCollection=()=>{
     const [memes,setMemes]=useState([]);
@@ -31,7 +38,9 @@ const MemeCollection=()=>{
             </Pagination>
             {currentMemes.map((meme)=>{
                 return (
-                    <MemeTemplate key={meme.id} meme={meme}/>
+                    <LazyLoad key={meme.id} height={100} offset={[-100,100]} placeholder={<Spinner/>}>
+                        <MemeTemplate key={meme.id} meme={meme}/>
+                    </LazyLoad>
                 )
             })}
             <Pagination 
