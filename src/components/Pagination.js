@@ -8,18 +8,29 @@ const Pagination = ({memesPerPage,totalMemes,paginate,currentPage}) => {
     return (
         <nav>
             <ul className='pagination'>
-                <button onClick={()=>{if(currentPage>0 && currentPage<10) return paginate(currentPage+1)}} className='page-link'>NEXT</button>
+                <button style={btn} onClick={()=>{if(currentPage>0 && currentPage<10) return paginate(currentPage+1)}} className='page-link'>NEXT</button>
                 {pageNumbers.map(number=>(
                     <li key={number} className='page-item'>
-                        <button onClick={()=>paginate(number)} className='page-link'>
+                        <button 
+                            style={number===currentPage?selectedBtn:btn} 
+                            onClick={()=>paginate(number)} 
+                            className='page-link'>
                             {number}
                         </button>
                     </li>
                 ))}
-                <button onClick={()=>{if(currentPage>1 && currentPage<=10) return paginate(currentPage-1)}} className='page-link'>PREVIOUS</button>
+                <button style={btn} onClick={()=>{if(currentPage>1 && currentPage<=10) return paginate(currentPage-1)}} className='page-link'>PREV</button>
             </ul>
         </nav>
     )
+}
+
+const selectedBtn={
+    padding:'10px',
+    border:'2px solid blue'
+}
+const btn={
+    padding:'10px',
 }
 
 export default Pagination

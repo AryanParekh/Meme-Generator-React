@@ -6,8 +6,8 @@ import Footer from './components/Footer';
 import MemeCreator from './components/MemeCreator';
 import {BrowserRouter,Route} from 'react-router-dom';
 
+
 export default function App(){
-  
   return (
     <BrowserRouter>
       <div>
