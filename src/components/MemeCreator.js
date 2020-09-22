@@ -71,7 +71,7 @@ export default function MemeCreator(){
 }
 
 const btn={
-    width: "200px",
+    width: "50%",
     display: 'inline-block',
     padding:'1rem 1.5rem',
     border: '1px solid black',
@@ -85,7 +85,7 @@ const btn={
 }
 
 const txtarea={
-    width: '200px',
+    width: '50%',
     fontSize: '1.3rem',
     padding: '1rem',
     border: '0.5px solid #333',
