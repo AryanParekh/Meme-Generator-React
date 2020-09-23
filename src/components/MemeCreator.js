@@ -5,12 +5,8 @@ import axios from 'axios';
 
 export default function MemeCreator(){
     let {id,box}= useParams();
-    let arr=[];
-    for(let j=0;j<box;j++){
-        arr.push('');
-    }
     let [meme,setMeme]=useState(null);
-    let [text,setText]=useState(arr);
+    let [text,setText]=useState(Array(parseInt(box)).fill(''));
 
     const changeHandler=(e,number)=>{
         const t=[...text];
@@ -25,7 +21,6 @@ export default function MemeCreator(){
         for(let k=0;k<box;k++){
             boxes[k]={'text':text[k]}
         }
-        console.log()
         
         var bodyFormData=new FormData();
         bodyFormData.append('template_id',id);
@@ -45,24 +40,18 @@ export default function MemeCreator(){
         .catch((error)=>console.log(error));
         
     }
-    
-    const textBoxNumber=[];
-    for(let i=0;i<box;i++){
-        textBoxNumber.push(i);
-    }
-
     return (
         <div>
             <form onSubmit={submitHandler}>
-                {textBoxNumber.map(number =><div key={number}>
+                {Array(parseInt(box)).fill(0).map((_,index) =>(<div key={index}>
                                                 <textarea 
                                                     style={txtarea} 
                                                     width='20px' 
-                                                    value={text[number]} 
-                                                    onChange={e=>changeHandler(e,number)}
-                                                    placeholder={"Enter text "+(number+1)}
+                                                    value={text[index]} 
+                                                    onChange={e=>changeHandler(e,index)}
+                                                    placeholder={"Enter text "+(index+1)}
                                                     />
-                                            </div>)}
+                                            </div>))}
                 <button style={btn} type='submit'>Submit</button>
             </form>
             {meme===null?null:<Image url={meme.url}/>}

@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import MemeTemplate from './MemeTemplate';
 import Pagination from './Pagination';
-import axios from 'axios';
 import LazyLoad from 'react-lazyload';
 
 const Spinner=()=>(
@@ -16,17 +15,21 @@ const MemeCollection=()=>{
     const [memesPerPage]=useState(10);
 
     useEffect(()=>{
-        axios.get('https://api.imgflip.com/get_memes')
-        .then((response)=>{
-            return setMemes(response.data.data.memes)
-        })
+        async function API(url){
+            const baseUrl='https://api.imgflip.com/';
+            const response = await fetch(baseUrl+url);
+            const data=await response.json();
+            return data;
+        }
+        API('get_memes').then(response=>setMemes(response.data.memes));
     },[]);
-
+    
     const indexOfLastMeme = currentPage* memesPerPage;
     const indexOfFirstMeme = indexOfLastMeme-memesPerPage;
     const currentMemes = memes.slice(indexOfFirstMeme,indexOfLastMeme);
 
     const paginate =(pageNumber)=> setCurrentPage(pageNumber);
+
     return (
         <div style={set}>
             <center>
